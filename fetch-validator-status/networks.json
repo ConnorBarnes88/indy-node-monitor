@@ -50,5 +50,9 @@
   "itn": {
     "name": "Indicio TestNet",
     "genesisUrl": "https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis"
+  },
+  "cdn": {
+    "name": "Candy Dev Net",
+    "genesisUrl": "https://candy-dev.idlab.org/genesis"
   }
 }
