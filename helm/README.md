@@ -12,7 +12,7 @@ _**Work in progress, for development use only.**_
 
 #### values.yaml
 
-1.  Edit the **inputs** to list the networks you want to monitor. These networks must be defined in the [**conf/indy\_node\_monitor/networks.json**](./conf/indy_node_monitor/networks.json) file.
+1.  Edit the **inputs** to list the networks you want to monitor. These networks must be defined in the [**config/indy\_node\_monitor/networks.json**](./config/indy_node_monitor/networks.json) file.
 2.  (optional) If you want to expose services, set the **ingress** information.
 
 #### secrets
@@ -40,7 +40,7 @@ helm upgrade indy-monitoring-stack . \
 
 #### service configuration
 
-All service configurations are located in the **conf/** folder under their respective application directory. These configurations are loaded as configmaps during deployment and injected into the pods. 
+All service configurations are located in the **config/** folder under their respective application directory. These configurations are loaded as configmaps during deployment and injected into the pods. 
 
 You can apply a new configuration in 3 steps:
 
