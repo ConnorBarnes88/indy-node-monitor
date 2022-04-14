@@ -33,7 +33,7 @@ Once you are happy with the configuration, create the namespace and deploy the s
 ```plaintext
 helm upgrade indy-monitoring-stack . \
     --namespace indy-monitoring-stack \
-    --create-namespace --install --wait
+    --create-namespace --install
 ```
 
 ### Advanced configuration
