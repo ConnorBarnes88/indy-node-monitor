@@ -1,0 +1,56 @@
+---
+namespace: indy-monitoring-stack
+
+# These inputs will be dynamically generated as input configuration for telegraf.
+# Must match networks defined in conf/indy_node_monitor/networks.json and have a network_monitor seed.
+inputs:
+- bct
+- cdn
+
+# These files live in ./conf/grafana/dashboards/
+dashboards:
+- prometheus.json
+- influxdb.json
+- topview.json
+
+ingress:
+  active: false
+  domain: # Set if you want to expose services
+
+indy_node_monitor:
+  name: indy-node-monitor
+  repository: idlaborg/indy-node-monitor
+  tag: "0.4.0"
+  ingress: indy-node-monitor
+
+alertmanager:
+  name: alertmanager
+  repository: prom/alertmanager
+  tag: v0.24.0
+  ingress: indy-alerts
+
+prometheus:
+  name: prometheus
+  repository: prom/prometheus
+  tag: v2.34.0
+  ingress: indy-prom
+  data_volume: 1Gi
+
+influxdb:
+  name: influxdb
+  repository: influxdb
+  tag: "1.8"
+  ingress: indy-flux
+  data_volume: 1Gi
+
+telegraf:
+  name: telegraf
+  repository: telegraf
+  tag: 1.22-alpine
+
+grafana:
+  name: grafana
+  repository: grafana/grafana
+  tag: "8.4.4"
+  ingress: indy-dashboard
+  data_volume: 1Gi

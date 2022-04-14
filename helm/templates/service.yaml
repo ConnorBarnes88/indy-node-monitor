@@ -1,0 +1,99 @@
+---
+{{- with .Values.alertmanager }}
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ $.Values.namespace }}
+  name: "{{ .name }}"
+spec:
+  selector:
+    app: {{ .name }}
+  ports:
+    - protocol: TCP
+      port: 9093
+      targetPort: 9093
+{{- end }}
+---
+{{- with .Values.grafana }}
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ $.Values.namespace }}
+  name: "{{ .name }}"
+spec:
+  selector:
+    app: {{ .name }}
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+{{- end }}
+---
+{{- with .Values.indy_node_monitor }}
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ $.Values.namespace }}
+  name: "{{ .name }}"
+spec:
+  selector:
+    app: {{ .name }}
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+{{- end }}
+---
+{{- with .Values.influxdb }}
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ $.Values.namespace }}
+  name: "{{ .name }}"
+spec:
+  selector:
+    app: {{ .name }}
+  ports:
+    - name: "8082"
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
+    - name: api
+      protocol: TCP
+      port: 8086
+      targetPort: 8086
+    - name: "8089"
+      protocol: UDP
+      port: 8089
+      targetPort: 8089
+{{- end }}
+---
+{{- with .Values.prometheus }}
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ $.Values.namespace }}
+  name: "{{ .name }}"
+spec:
+  selector:
+    app: {{ .name }}
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+{{- end }}
+---
+{{- with .Values.telegraf }}
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ $.Values.namespace }}
+  name: "{{ .name }}"
+spec:
+  selector:
+    app: {{ .name }}
+  ports:
+    - protocol: TCP
+      port: 9273
+      targetPort: 9273
+{{- end }}
