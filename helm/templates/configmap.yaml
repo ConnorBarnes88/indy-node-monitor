@@ -6,7 +6,7 @@ metadata:
   namespace: {{ $.Values.namespace }}
   name: "{{ .name }}-configmap"
 data:
-{{ ($.Files.Glob "conf/indy_node_monitor/networks.json").AsConfig | indent 2 }}
+{{ ($.Files.Glob "config/indy_node_monitor/networks.json").AsConfig | indent 2 }}
 {{- end }}
 ---
 {{- with .Values.alertmanager }}
@@ -16,7 +16,7 @@ metadata:
   namespace: {{ $.Values.namespace }}
   name: "{{ .name }}-configmap"
 data:
-{{ ($.Files.Glob "conf/alertmanager/config.yml").AsConfig | indent 2 }}
+{{ ($.Files.Glob "config/alertmanager/config.yml").AsConfig | indent 2 }}
 {{- end }}
 ---
 {{- with .Values.grafana }}
@@ -25,8 +25,8 @@ kind: ConfigMap
 metadata:
   name: "{{ .name }}-configmap"
 data:
-{{ ($.Files.Glob "conf/grafana/*").AsConfig | indent 2 }}
-{{ ($.Files.Glob "conf/grafana/dashboards/*").AsConfig | indent 2 }}
+{{ ($.Files.Glob "config/grafana/*").AsConfig | indent 2 }}
+{{ ($.Files.Glob "config/grafana/dashboards/*").AsConfig | indent 2 }}
 {{- end }}
 ---
 {{- with .Values.influxdb }}
@@ -36,7 +36,7 @@ metadata:
   namespace: {{ $.Values.namespace }}
   name: "{{ .name }}-configmap"
 data:
-{{ ($.Files.Glob "conf/influxdb/*").AsConfig | indent 2 }}
+{{ ($.Files.Glob "config/influxdb/*").AsConfig | indent 2 }}
 {{- end }}
 ---
 {{- with .Values.prometheus }}
@@ -46,7 +46,7 @@ metadata:
   namespace: {{ $.Values.namespace }}
   name: "{{ .name }}-configmap"
 data:
-{{ ($.Files.Glob "conf/prometheus/*").AsConfig | indent 2 }}
+{{ ($.Files.Glob "config/prometheus/*").AsConfig | indent 2 }}
 {{- end }}
 ---
 {{- with .Values.telegraf }}
@@ -57,7 +57,7 @@ metadata:
   name: "{{ .name }}-configmap"
 data:
   telegraf.conf: |-
-  {{- range $.Files.Lines "conf/telegraf/telegraf.conf" }}
+  {{- range $.Files.Lines "config/telegraf/telegraf.conf" }}
     {{ . }}
   {{- end }}
   {{- range $.Values.inputs }}

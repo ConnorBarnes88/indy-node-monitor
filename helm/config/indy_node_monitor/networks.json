@@ -1,0 +1,50 @@
+{
+  "sbn": {
+    "name": "Sovrin Builder Net",
+    "genesisUrl": "https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_builder_genesis"
+  },
+  "ssn": {
+    "name": "Sovrin Staging Net",
+    "genesisUrl": "https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_sandbox_genesis"
+  },
+  "smn": {
+    "name": "Sovrin Main Net",
+    "genesisUrl": "https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_live_genesis"
+  },
+  "bcd": {
+    "name": "BCovrin Dev",
+    "genesisUrl": "http://dev.bcovrin.vonx.io/genesis"
+  },
+  "bct": {
+    "name": "BCovrin Test",
+    "genesisUrl": "http://test.bcovrin.vonx.io/genesis"
+  },
+  "bcp": {
+    "name": "BCovrin Prod",
+    "genesisUrl": "http://prod.bcovrin.vonx.io/genesis"
+  },
+  "gld": {
+    "name": "GreenLight Dev Ledger",
+    "genesisUrl": "http://dev.greenlight.bcovrin.vonx.io/genesis"
+  },
+  "gl": {
+    "name": "GreenLight Ledger",
+    "genesisUrl": "http://greenlight.bcovrin.vonx.io/genesis"
+  },
+  "imn": {
+    "name": "Indicio MainNet",
+    "genesisUrl": "https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_mainnet_genesis"
+  },
+  "idn": {
+    "name": "Indicio DemoNet",
+    "genesisUrl": "https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_demonet_genesis"
+  },
+  "itn": {
+    "name": "Indicio TestNet",
+    "genesisUrl": "https://raw.githubusercontent.com/Indicio-tech/indicio-network/main/genesis_files/pool_transactions_testnet_genesis"
+  },
+  "cdn": {
+    "name": "Candy Dev Net",
+    "genesisUrl": "https://candy-dev.idlab.org/genesis"
+  }
+}

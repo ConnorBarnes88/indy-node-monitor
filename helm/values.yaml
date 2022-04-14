@@ -2,12 +2,12 @@
 namespace: indy-monitoring-stack
 
 # These inputs will be dynamically generated as input configuration for telegraf.
-# Must match networks defined in conf/indy_node_monitor/networks.json and have a network_monitor seed.
+# Must match networks defined in config/indy_node_monitor/networks.json and have a network_monitor seed.
 inputs:
 - bct
 - cdn
 
-# These files live in ./conf/grafana/dashboards/
+# These files live in ./config/grafana/dashboards/
 dashboards:
 - prometheus.json
 - influxdb.json
