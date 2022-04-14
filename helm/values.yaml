@@ -21,7 +21,7 @@ indy_node_monitor:
   name: indy-node-monitor
   repository: idlaborg/indy-node-monitor
   tag: "0.4.0"
-  ingress: indy-node-monitor
+  ingress: indy-fetch
 
 alertmanager:
   name: alertmanager
