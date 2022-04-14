@@ -5,7 +5,7 @@ _**Work in progress, for development use only.**_
 ### Pre-requisites
 
 *   K8s or minikube cluster
-*   Helm binaries
+*   Helm v3+ binaries
 *   Network\_monitor seed.s for chosen Indy network.s
 
 ### Quickstart
