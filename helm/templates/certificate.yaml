@@ -1,0 +1,19 @@
+---
+{{- if eq .Values.ingress.cert_manager.active true }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ $.Values.namespace }}-cert
+  namespace: default
+spec:
+  secretName: {{ $.Values.namespace }}-tls
+  issuerRef:
+    name: {{ $.Values.ingress.cert_manager.issuer }}
+  commonName: {{ $.Values.ingress.domain }}
+  dnsNames:
+    {{- range $service, $endpoint := $.Values.ingress.endpoints }}
+    {{- if $endpoint }}
+    - {{ $endpoint }}.{{ $.Values.ingress.domain }}
+    {{- end }}
+    {{- end }}
+{{- end }}

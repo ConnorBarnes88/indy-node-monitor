@@ -1,57 +1,66 @@
-## Helm chart for the Indy-Monitoring-Stack
+# Helm chart for the Indy-Monitoring-Stack
 
 _**Work in progress, for development use only.**_
 
-### Pre-requisites
+## Pre-requisites
 
 *   K8s or minikube cluster
 *   Helm v3+ binaries
-*   Network\_monitor seed.s for chosen Indy network.s
+*   Registered Indy network monitor seed
 
-### Quickstart
+## Quickstart
 
-#### values.yaml
+### Configuring the deployment
 
-1.  Edit the **inputs** to list the networks you want to monitor. These networks must be defined in the [**config/indy\_node\_monitor/networks.json**](./config/indy_node_monitor/networks.json) file.
-2.  (optional) If you want to expose services, set the **ingress** information.
+1.  Clone and edit the [**extra_vars.template**](./extra_vars.template) to a file called **extra_vars.yaml**.
+    
+        cp extra_vars.template extra_vars.yaml
 
-#### secrets
+2.  Edit the inputs. For some reference you can look at the [**config/indy_node_monitor/networks.json**](./config/indy_node_monitor/networks.json) file. You can add as many as you want. You must include a registered network monitor seed for your selected networks.
 
-Copy the 2 templates in the **secrets/** directory as **credentials.yaml** and **seeds.yaml** respectively.
+    Here is an example for the soverin network:
+    ```plaintext
+    inputs:
+      - name: Sovrin Builder Net
+        short_name: sbn
+        genesis_url: https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_builder_genesis
+        network_monitor_seed: INSERT_REGISTERED_NETWORK_MONITOR_SEED_HERE
+      - name: Sovrin Staging Net
+        short_name: ssn
+        genesis_url: https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_sandbox_genesis
+        network_monitor_seed: INSERT_REGISTERED_NETWORK_MONITOR_SEED_HERE
+      - name: Sovrin Main Net
+        short_name: smn
+        genesis_url: https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_live_genesis
+        network_monitor_seed: INSERT_REGISTERED_NETWORK_MONITOR_SEED_HERE
+    ```
+3.  Set the secrets to something secure. Make sure you keep a copy of your credential in safe keystore such as a password manager or vault.
+4.  (optional) If you want to expose services, set the **ingress** to `True`, enter your **domain** and **endpoints**.
 
-```plaintext
-cp credentials.template credentials.yaml
-cp seeds.template seeds.yaml
-```
+### Deployment
 
-Fill in the seeds which match the chosen networks in the inputs section of the **values.yaml** file. Choose a password for the Grafana admin account (GF_SECURITY_ADMIN_PASSWORD). You may leave the rest blank.
-
-#### deploy
-
-Once you are happy with the configuration, create the namespace and deploy the stack.
+Once you are happy with the configuration, create the namespace and deploy the stack. Here's a one liner that will take care of this for you. Make sure the namespace name matches the **extra_vars.yaml** file.
 
 ```plaintext
 helm upgrade indy-monitoring-stack . \
     --namespace indy-monitoring-stack \
+    --values ./extra_vars.yaml \
     --create-namespace --install
+
 ```
 
-### Advanced configuration
+## Advanced configuration
 
-#### service configuration
+You can edit the ports for the applications but this is not recommended. Some ports are statically set in the configuration files and it might break things if you are not sure about what you are doing. It is recommeneded to keep the ports as they are defined in the [**values.yaml**](./values.yaml) file.
 
-All service configurations are located in the **config/** folder under their respective application directory. These configurations are loaded as configmaps during deployment and injected into the pods. 
+### Service configuration
 
-You can apply a new configuration in 3 steps:
+All service configurations are located in the [**config/**](./config/) folder under their respective application directory. These configurations are loaded as configmaps during deployment and injected into the pods. 
 
-1.  Delete the previous corresponding configmap resource from the namespace.
-2.  Run the helm upgrade command to generate the new configmap.
-3.  Restart the pod corresponding to that service.
+You can apply a new configuration by editing these files and redeploying the stack.
 
-#### dashboard development
+### Dashboard development
 
-You can export a dashboard from grafana after you customize it and add the **\*.json** file generated under **conf/grafana/dashboards/**
+You can export a dashboard from grafana after you customized it and add the ***.json** file generated under [**config/grafana/dashboards/**](./config/grafana/dashboards/)
 
-Edit the **values.yaml** **dashboard** section to include your new dashboard (name **must** match the \*.json filename)
-
-Follow the steps from the service configuration section to apply a new dashboard.
+All dashboards from that directory are automatically loaded when redeploying the stack.

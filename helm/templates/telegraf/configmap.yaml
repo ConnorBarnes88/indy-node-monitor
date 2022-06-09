@@ -1,54 +1,4 @@
 ---
-{{- with .Values.indy_node_monitor }}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  namespace: {{ $.Values.namespace }}
-  name: "{{ .name }}-configmap"
-data:
-{{ ($.Files.Glob "config/indy_node_monitor/networks.json").AsConfig | indent 2 }}
-{{- end }}
----
-{{- with .Values.alertmanager }}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  namespace: {{ $.Values.namespace }}
-  name: "{{ .name }}-configmap"
-data:
-{{ ($.Files.Glob "config/alertmanager/config.yml").AsConfig | indent 2 }}
-{{- end }}
----
-{{- with .Values.grafana }}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: "{{ .name }}-configmap"
-data:
-{{ ($.Files.Glob "config/grafana/*").AsConfig | indent 2 }}
-{{ ($.Files.Glob "config/grafana/dashboards/*").AsConfig | indent 2 }}
-{{- end }}
----
-{{- with .Values.influxdb }}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  namespace: {{ $.Values.namespace }}
-  name: "{{ .name }}-configmap"
-data:
-{{ ($.Files.Glob "config/influxdb/*").AsConfig | indent 2 }}
-{{- end }}
----
-{{- with .Values.prometheus }}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  namespace: {{ $.Values.namespace }}
-  name: "{{ .name }}-configmap"
-data:
-{{ ($.Files.Glob "config/prometheus/*").AsConfig | indent 2 }}
-{{- end }}
----
 {{- with .Values.telegraf }}
 apiVersion: v1
 kind: ConfigMap
@@ -57,17 +7,42 @@ metadata:
   name: "{{ .name }}-configmap"
 data:
   telegraf.conf: |-
-  {{- range $.Files.Lines "config/telegraf/telegraf.conf" }}
-    {{ . }}
-  {{- end }}
-  {{- range $.Values.inputs }}
+    [agent]
+      interval = "1m"
+      round_interval = true
+      metric_batch_size = 1000
+      metric_buffer_limit = 10000
+      collection_jitter = "0s"
+      flush_interval = "5s"
+      flush_jitter = "0s"
+      precision = ""
+      debug = false
+      quiet = false
+      logfile = ""
+      hostname = "$HOSTNAME"
+      omit_hostname = false
+
+    [[outputs.influxdb]]
+      urls = ["http://influxdb:8086"]
+      database = "telegraf"
+      username = ""
+      password = ""
+      retention_policy = ""
+      write_consistency = "any"
+      timeout = "5s"
+
+    [[outputs.prometheus_client]]
+      listen = ":9273"
+      metric_version = 2
+
+    {{- range $.Values.inputs }}
     [[inputs.http]]
       urls = [
-        "http://indy-node-monitor:8080/networks/{{ . }}"
+        "http://indy-node-monitor:8080/networks/{{ .short_name }}"
       ]
       name_override = "node"
       method = "GET"
-      headers = {"seed" = "${{ . | upper }}_SEED"}
+      headers = {"seed" = "${{ .short_name | upper }}_SEED"}
       timeout = "2m"
       success_status_codes = [200]
       data_format = "json"
@@ -115,5 +90,5 @@ data:
       json_time_key = "status_timestamp"
       json_time_format = "unix"
       json_timezone = ""
-  {{- end }}
+    {{- end }}
 {{- end }}
