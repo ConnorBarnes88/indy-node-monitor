@@ -2,13 +2,13 @@
 namespace: indy-monitoring-stack
 
 ingress:
-  active: false
+  active: true
 
 indy_node_monitor:
   name: indy-node-monitor
   port: 8080
   repository: idlaborg/indy-node-monitor
-  tag: "0.4.0"
+  tag: "0.4.2"
 
 alertmanager:
   name: alertmanager
