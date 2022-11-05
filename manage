@@ -385,6 +385,7 @@ function writeEnvSeeds(){
 SBN_SEED=
 SSN_SEED=
 SMN_SEED=
+CDN_SEED=
 # =======================================================
 EOF
   )
@@ -480,7 +481,7 @@ if ! isInstalled ${DOCKER_EXE}; then
   exit 1
 fi
 
-DOCKER_COMPOSE_EXE="${DOCKER_EXE} compose"
+DOCKER_COMPOSE_EXE="${DOCKER_EXE}-compose"
 if ! isInstalled ${DOCKER_COMPOSE_EXE}; then
   echoYellow "${DOCKER_COMPOSE_EXE} is not installed."
   exit 1

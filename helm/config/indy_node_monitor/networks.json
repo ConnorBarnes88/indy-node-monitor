@@ -11,14 +11,6 @@
     "name": "Sovrin Main Net",
     "genesisUrl": "https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_live_genesis"
   },
-  "vn": {
-    "name": "Local von-network",
-    "genesisUrl": "http://host.docker.internal:9000/genesis"
-  },
-  "vn-linux": {
-    "name": "Linux Local von-network",
-    "genesisUrl": "http://localhost:9000/genesis"
-  },
   "bcd": {
     "name": "BCovrin Dev",
     "genesisUrl": "http://dev.bcovrin.vonx.io/genesis"
@@ -28,7 +20,7 @@
     "genesisUrl": "http://test.bcovrin.vonx.io/genesis"
   },
   "bcp": {
-    "name": "BCovrin",
+    "name": "BCovrin Prod",
     "genesisUrl": "http://prod.bcovrin.vonx.io/genesis"
   },
   "gld": {

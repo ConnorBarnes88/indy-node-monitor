@@ -1,8 +1,10 @@
 influxdb/data/
-
+helm/extra_vars.yaml
 # Ignore environment files that could contains seeds (credentials)
 .env-seed*
 to.do
+credentials.yaml
+seeds.yaml
 
 **/conf/
 **/log/
